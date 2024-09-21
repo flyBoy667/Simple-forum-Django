@@ -20,6 +20,7 @@ class Room(models.Model):
     description = models.TextField(null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
+    participants = models.ManyToManyField(User, related_name="participants")
 
     # auto_now sera applique a chaque sauvegarde alors que auto_now_add uniquement au moment de l'enregistrement
     updated = models.DateTimeField(auto_now=True)
