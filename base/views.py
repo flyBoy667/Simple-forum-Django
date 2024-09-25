@@ -68,13 +68,26 @@ def home(request):
     room_messages = Message.objects.filter(
         Q(room__topic__name__icontains=q)
     )
-    print(room_messages)
     context = {
         "rooms": rooms,
         "topics": topics,
         "rooms_messages": room_messages
     }
     return render(request, "base/home.html", context)
+
+
+def user_profile(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()
+    rooms_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {
+        "user": user,
+        "rooms": rooms,
+        "topics": topics,
+        "rooms_messages": rooms_messages
+    }
+    return render(request, "base/profile.html", context)
 
 
 def room_detail(request, pk: str):
