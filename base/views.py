@@ -182,3 +182,8 @@ def delete_message(request, pk):
         return redirect("room-detail", pk=message.room.id)
 
     return render(request, "base/room_delete.html", {"obj": message})
+
+
+@login_required(login_url="login")
+def update_user(request):
+    return render(request, "base/edit-user.html")
