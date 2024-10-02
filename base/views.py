@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from base.forms import RoomForm
+from base.forms import RoomForm, UserForm
 from base.models import Room, Topic, Message
 
 
@@ -186,4 +186,15 @@ def delete_message(request, pk):
 
 @login_required(login_url="login")
 def update_user(request):
-    return render(request, "base/edit-user.html")
+    user = request.user
+    form = UserForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect("user-profile", pk=user.id)
+        else:
+            messages.error(request, "An error occurred during editing")
+
+    return render(request, "base/edit-user.html", {'form': form})
