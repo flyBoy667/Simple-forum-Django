@@ -33,7 +33,7 @@ def login_page(request):
             login(request, user)
             return redirect("home")
 
-    return render(request, "base/login_register.html", {"page": page})
+    return render(request, "base/login.html", {"page": page})
 
 
 def register_user(request):
@@ -50,7 +50,7 @@ def register_user(request):
         else:
             messages.error(request, "An error occurred during registration")
 
-    return render(request, "base/login_register.html", {"form": form})
+    return render(request, "base/login.html", {"form": form})
 
 
 def logout_user(request):
@@ -167,7 +167,7 @@ def delete_room(request, pk):
         room.delete()
         return redirect("home")
 
-    return render(request, "base/room_delete.html", {"obj": room})
+    return render(request, "base/delete.html", {"obj": room})
 
 
 @login_required(login_url="login")
@@ -181,7 +181,7 @@ def delete_message(request, pk):
         message.delete()
         return redirect("room-detail", pk=message.room.id)
 
-    return render(request, "base/room_delete.html", {"obj": message})
+    return render(request, "base/delete.html", {"obj": message})
 
 
 @login_required(login_url="login")
