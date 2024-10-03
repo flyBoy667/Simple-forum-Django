@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Détails de l'événement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .event-info {
+            margin-bottom: 15px;
+        }
+
+        .event-info p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .timestamp {
+            font-style: italic;
+            color: #888;
+        }
+
+        .empty {
+            color: #c00;
+        }
+
+        .button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button a {
+            text-decoration: none;
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Rooms</h1>
+    <div class="event-info" id="room-container">
+
+    </div>
+    <div class="button">
+        <a href="#">Retour</a>
+    </div>
+</div>
+<script>
+    const eventInfo = document.getElementById("room-container");
+    const getRooms = async () => {
+        const response = await fetch("http://localhost:8001/api/rooms/");
+        const rooms = await response.json();
+
+        rooms.forEach((room) => {
+            const row = `
+        <p><span class="label">Nom :</span> ${room.name}</p>
+        <p><span class="label">Description :</span> ${room.description}</p>
+        <hr>
+
+        `
+            eventInfo.innerHTML += row
+        });
+    };
+
+    getRooms();
+</script>
+</body>
+</html>
